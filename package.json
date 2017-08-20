@@ -1,12 +1,84 @@
 {
-  "name": "react-native-gifted-chat",
-  "version": "0.2.5",
-  "description": "The most complete chat UI for React Native",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FaridSafi/react-native-gifted-chat.git"
+  "_args": [
+    [
+      {
+        "raw": "react-native-gifted-chat@^0.1.4",
+        "scope": null,
+        "escapedName": "react-native-gifted-chat",
+        "name": "react-native-gifted-chat",
+        "rawSpec": "^0.1.4",
+        "spec": ">=0.1.4 <0.2.0",
+        "type": "range"
+      },
+      "/Users/macbook/Projects/openenglish/app/OpenEnglish"
+    ]
+  ],
+  "_from": "react-native-gifted-chat@>=0.1.4 <0.2.0",
+  "_id": "react-native-gifted-chat@0.1.5",
+  "_inCache": true,
+  "_location": "/react-native-gifted-chat",
+  "_nodeVersion": "7.7.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/react-native-gifted-chat-0.1.5.tgz_1499643650398_0.37288953666575253"
   },
+  "_npmUser": {
+    "name": "cooperka",
+    "email": "cooperka92@gmail.com"
+  },
+  "_npmVersion": "4.6.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-gifted-chat@^0.1.4",
+    "scope": null,
+    "escapedName": "react-native-gifted-chat",
+    "name": "react-native-gifted-chat",
+    "rawSpec": "^0.1.4",
+    "spec": ">=0.1.4 <0.2.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-gifted-chat/-/react-native-gifted-chat-0.1.5.tgz",
+  "_shasum": "9823473f52bb29fd3b5efc404db5d6917bc1b2e7",
+  "_shrinkwrap": null,
+  "_spec": "react-native-gifted-chat@^0.1.4",
+  "_where": "/Users/macbook/Projects/openenglish/app/OpenEnglish",
+  "author": {
+    "name": "Farid Safi"
+  },
+  "bugs": {
+    "url": "https://github.com/FaridSafi/react-native-gifted-chat/issues"
+  },
+  "dependencies": {
+    "@expo/react-native-action-sheet": "0.3.1",
+    "md5": "2.2.1",
+    "moment": "2.17.1",
+    "react-native-communications": "2.2.1",
+    "react-native-invertible-scroll-view": "1.0.0",
+    "react-native-lightbox": "github:oblador/react-native-lightbox#c84a8543d4511fe6a44c3d7820747c9c1bddd875",
+    "react-native-parsed-text": "0.0.16",
+    "shallowequal": "0.2.2",
+    "uuid": "3.0.1"
+  },
+  "description": "The most complete chat UI for React Native",
+  "devDependencies": {
+    "eslint": "~3.12.2",
+    "eslint-config-airbnb": "~13.0.0",
+    "eslint-config-cooperka": "~0.2.3",
+    "eslint-plugin-import": "~2.2.0",
+    "eslint-plugin-jsx-a11y": "~2.2.3",
+    "eslint-plugin-react": "~6.8.0",
+    "eslint-plugin-react-native": "~2.2.1"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "9823473f52bb29fd3b5efc404db5d6917bc1b2e7",
+    "tarball": "https://registry.npmjs.org/react-native-gifted-chat/-/react-native-gifted-chat-0.1.5.tgz"
+  },
+  "gitHead": "facb3adecffc6fe66a58d87fc3e69a403d3a1f07",
+  "homepage": "https://github.com/FaridSafi/react-native-gifted-chat#readme",
   "keywords": [
     "android",
     "ios",
@@ -17,34 +89,31 @@
     "message",
     "chat"
   ],
-  "author": "Farid Safi",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/FaridSafi/react-native-gifted-chat/issues"
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "cooperka",
+      "email": "cooperka92@gmail.com"
+    },
+    {
+      "name": "faridsafi",
+      "email": "farid+npm@senseful.fr"
+    },
+    {
+      "name": "kfiroo",
+      "email": "kfirgolan@gmail.com"
+    }
+  ],
+  "name": "react-native-gifted-chat",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FaridSafi/react-native-gifted-chat.git"
   },
-  "homepage": "https://github.com/FaridSafi/react-native-gifted-chat#readme",
   "scripts": {
     "lint": "eslint . --ext .js,.jsx"
   },
-  "devDependencies": {
-    "eslint": "3.19.0",
-    "eslint-config-airbnb": "15.0.2",
-    "eslint-config-cooperka": "0.2.3",
-    "eslint-plugin-import": "2.6.1",
-    "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.1.0",
-    "eslint-plugin-react-native": "2.3.2"
-  },
-  "dependencies": {
-    "@expo/react-native-action-sheet": "cribspot/react-native-action-sheet#b422c54f26d30b9e85eb14a882ea9cec38600730",
-    "md5": "2.2.1",
-    "moment": "2.18.1",
-    "prop-types": "15.5.10",
-    "react-native-communications": "2.2.1",
-    "react-native-invertible-scroll-view": "1.0.0",
-    "react-native-lightbox": "oblador/react-native-lightbox#c84a8543d4511fe6a44c3d7820747c9c1bddd875",
-    "react-native-parsed-text": "0.0.18",
-    "shallowequal": "1.0.2",
-    "uuid": "3.1.0"
-  }
+  "version": "0.1.5"
 }

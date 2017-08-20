@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import React from "react";
-import {Image, StyleSheet, View, ViewPropTypes} from "react-native";
+import {Image, StyleSheet, View} from "react-native";
 import GiftedAvatar from "./GiftedAvatar";
 import {isSameUser, isSameDay, warnDeprecated} from "./utils";
 
@@ -37,7 +36,7 @@ export default class Avatar extends React.Component {
         </View>
       );
     }
-
+    
     return (
       <View
         style={[styles[this.props.position].container, styles[this.props.position][computedStyle], this.props.containerStyle[this.props.position]]}>
@@ -93,20 +92,20 @@ Avatar.defaultProps = {
 };
 
 Avatar.propTypes = {
-  renderAvatarOnTop: PropTypes.bool,
-  position: PropTypes.oneOf(['left', 'right']),
-  currentMessage: PropTypes.object,
-  nextMessage: PropTypes.object,
-  onPressAvatar: PropTypes.func,
-  containerStyle: PropTypes.shape({
-    left: ViewPropTypes.style,
-    right: ViewPropTypes.style,
+  renderAvatarOnTop: React.PropTypes.bool,
+  position: React.PropTypes.oneOf(['left', 'right']),
+  currentMessage: React.PropTypes.object,
+  nextMessage: React.PropTypes.object,
+  onPressAvatar: React.PropTypes.func,
+  containerStyle: React.PropTypes.shape({
+    left: View.propTypes.style,
+    right: View.propTypes.style,
   }),
-  imageStyle: PropTypes.shape({
-    left: ViewPropTypes.style,
-    right: ViewPropTypes.style,
+  imageStyle: React.PropTypes.shape({
+    left: View.propTypes.style,
+    right: View.propTypes.style,
   }),
   //TODO: remove in next major release
-  isSameDay: PropTypes.func,
-  isSameUser: PropTypes.func
+  isSameDay: React.PropTypes.func,
+  isSameUser: React.PropTypes.func
 };

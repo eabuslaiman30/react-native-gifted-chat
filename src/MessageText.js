@@ -1,17 +1,13 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
   Linking,
   StyleSheet,
   Text,
   View,
-  ViewPropTypes,
 } from 'react-native';
 
 import ParsedText from 'react-native-parsed-text';
 import Communications from 'react-native-communications';
-
-const WWW_URL_PATTERN = /^www\./i;
 
 export default class MessageText extends React.Component {
   constructor(props) {
@@ -19,18 +15,11 @@ export default class MessageText extends React.Component {
     this.onUrlPress = this.onUrlPress.bind(this);
     this.onPhonePress = this.onPhonePress.bind(this);
     this.onEmailPress = this.onEmailPress.bind(this);
+    this.renderTextBr = this.renderTextBr.bind(this);
   }
 
   onUrlPress(url) {
-    // When someone sends a message that includes a website address beginning with "www." (omitting the scheme),
-    // react-native-parsed-text recognizes it as a valid url, but Linking fails to open due to the missing scheme.
-    if (WWW_URL_PATTERN.test(url)) {
-      this.onUrlPress(`http://${url}`);
-    } else if (Linking.canOpenURL(url)) {
-      Linking.openURL(url);
-    } else {
-      console.error('No handler for URL:', url);
-    }
+    Linking.openURL(url);
   }
 
   onPhonePress(phone) {
@@ -60,6 +49,12 @@ export default class MessageText extends React.Component {
     Communications.email(email, null, null, null, null);
   }
 
+  renderTextBr(matchingString, matches) {
+    let pattern = /(<br\ ?\/?>)+/;
+    let match = matchingString.match(pattern);
+    return '\n';
+  }
+
   render() {
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
@@ -69,6 +64,7 @@ export default class MessageText extends React.Component {
             {type: 'url', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onUrlPress},
             {type: 'phone', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onPhonePress},
             {type: 'email', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onEmailPress},
+            {pattern: /(<br\ ?\/?>)+/, renderText: this.renderTextBr}
           ]}
         >
           {this.props.currentMessage.text}
@@ -115,7 +111,7 @@ const styles = {
 };
 
 MessageText.contextTypes = {
-  actionSheet: PropTypes.func,
+  actionSheet: React.PropTypes.func,
 };
 
 MessageText.defaultProps = {
@@ -129,17 +125,17 @@ MessageText.defaultProps = {
 };
 
 MessageText.propTypes = {
-  position: PropTypes.oneOf(['left', 'right']),
-  currentMessage: PropTypes.object,
-  containerStyle: PropTypes.shape({
-    left: ViewPropTypes.style,
-    right: ViewPropTypes.style,
+  position: React.PropTypes.oneOf(['left', 'right']),
+  currentMessage: React.PropTypes.object,
+  containerStyle: React.PropTypes.shape({
+    left: View.propTypes.style,
+    right: View.propTypes.style,
   }),
-  textStyle: PropTypes.shape({
+  textStyle: React.PropTypes.shape({
     left: Text.propTypes.style,
     right: Text.propTypes.style,
   }),
-  linkStyle: PropTypes.shape({
+  linkStyle: React.PropTypes.shape({
     left: Text.propTypes.style,
     right: Text.propTypes.style,
   }),

@@ -1,10 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  ViewPropTypes,
 } from 'react-native';
 
 import moment from 'moment/min/moment-with-locales.min';
@@ -14,7 +12,7 @@ export default class Time extends React.Component {
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <Text style={[styles[this.props.position].text, this.props.textStyle[this.props.position]]}>
-          {moment(this.props.currentMessage.createdAt).locale(this.context.getLocale()).format(this.props.timeFormat)}
+          {moment(this.props.currentMessage.createdAt).locale(this.context.getLocale()).format('LT')}
         </Text>
       </View>
     );
@@ -55,7 +53,7 @@ const styles = {
 };
 
 Time.contextTypes = {
-  getLocale: PropTypes.func,
+  getLocale: React.PropTypes.func,
 };
 
 Time.defaultProps = {
@@ -68,15 +66,14 @@ Time.defaultProps = {
 };
 
 Time.propTypes = {
-  position: PropTypes.oneOf(['left', 'right']),
-  currentMessage: PropTypes.object,
-  containerStyle: PropTypes.shape({
-    left: ViewPropTypes.style,
-    right: ViewPropTypes.style,
+  position: React.PropTypes.oneOf(['left', 'right']),
+  currentMessage: React.PropTypes.object,
+  containerStyle: React.PropTypes.shape({
+    left: View.propTypes.style,
+    right: View.propTypes.style,
   }),
-  textStyle: PropTypes.shape({
+  textStyle: React.PropTypes.shape({
     left: Text.propTypes.style,
     right: Text.propTypes.style,
   }),
-  timeFormat: PropTypes.string,
 };

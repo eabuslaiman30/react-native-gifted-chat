@@ -1,11 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  ViewPropTypes,
 } from 'react-native';
 
 export default class Send extends React.Component {
@@ -58,9 +56,9 @@ Send.defaultProps = {
 };
 
 Send.propTypes = {
-  text: PropTypes.string,
-  onSend: PropTypes.func,
-  label: PropTypes.string,
-  containerStyle: ViewPropTypes.style,
+  text: React.PropTypes.string,
+  onSend: React.PropTypes.func,
+  label: React.PropTypes.string,
+  containerStyle: View.propTypes.style,
   textStyle: Text.propTypes.style,
 };
