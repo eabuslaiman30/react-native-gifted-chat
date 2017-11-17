@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
+  Image
 } from 'react-native';
 
 import MessageText from './MessageText';
@@ -17,6 +18,7 @@ export default class Bubble extends React.Component {
   constructor(props) {
     super(props);
     this.onLongPress = this.onLongPress.bind(this);
+    this.onPressResend = this.onPressResend.bind(this);
   }
 
   handleBubbleToNext() {
@@ -116,6 +118,32 @@ export default class Bubble extends React.Component {
     }
   }
 
+  onPressResend() {
+    if (this.props.onPressResend) {
+      this.props.onPressResend(this.context, this.props.currentMessage);
+    } else {
+      if (this.props.currentMessage.text) {
+        const options = [
+          'Retry',
+          'Cancel',
+        ];
+        const cancelButtonIndex = options.length - 1;
+        this.context.actionSheet().showActionSheetWithOptions({
+          options,
+          cancelButtonIndex,
+        },
+        (buttonIndex) => {
+          switch (buttonIndex) {
+            case 0:
+              if(this.props.onResendMessage != null) {
+                this.props.onResendMessage(this.props.currentMessage)
+              }
+          }
+        });
+      }
+    }
+  }
+
   render() {
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
@@ -125,14 +153,26 @@ export default class Bubble extends React.Component {
             accessibilityTraits="text"
             {...this.props.touchableProps}
           >
-            <View>
-              {this.renderCustomView()}
-              {this.renderMessageImage()}
-              {this.renderMessageText()}
-              <View style={[styles.bottom, this.props.bottomContainerStyle[this.props.position]]}>
-                {this.renderTime()}
-                {this.renderTicks()}
-              </View>
+            <View style={{flexDirection: 'row'}}>
+                <View style={{flexDirection: 'column'}}>
+                    {this.renderCustomView()}
+                    {this.renderMessageImage()}
+                    {this.renderMessageText()}
+                    <View style={[styles.bottom, this.props.bottomContainerStyle[this.props.position]]}>
+                        {this.renderTime()}
+                        {this.renderTicks()}
+                    </View>
+                </View>
+                { this.props.currentMessage.error && !this.props.isResending &&
+                    <View style={{width: 30, height: 45, justifyContent: 'center'}}>
+                        <TouchableWithoutFeedback
+                            onPress={this.onPressResend}>
+                            <Image
+                                style={{width: 25, minHeight: 20, resizeMode: 'contain'}}
+                                source={require('../images/exclamation.png')}></Image>
+                        </TouchableWithoutFeedback>
+                    </View>
+                }
             </View>
           </TouchableWithoutFeedback>
         </View>
