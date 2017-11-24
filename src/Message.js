@@ -2,6 +2,9 @@ import React from 'react';
 import {
   View,
   StyleSheet,
+  TouchableOpacity,
+  Image,
+  Text
 } from 'react-native';
 
 import Avatar from './Avatar';
@@ -10,7 +13,18 @@ import Day from './Day';
 
 import {isSameUser, isSameDay} from './utils';
 
+//Localization
+import { strings } from '../../../components/localization/strings'
+
 export default class Message extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        };
+        this.onPressResend = this.onPressResend.bind(this);
+    }
 
   getInnerComponentProps() {
     const {containerStyle, ...props} = this.props;
@@ -48,10 +62,49 @@ export default class Message extends React.Component {
     return null;
   }
 
+  onPressResend() {
+    if (this.props.onPressResend) {
+      this.props.onPressResend(this.context, this.props.currentMessage);
+    } else {
+      if (this.props.currentMessage.text) {
+        const options = [
+          strings.Retry,
+          strings.Cancel,
+        ];
+        const cancelButtonIndex = options.length - 1;
+        this.context.actionSheet().showActionSheetWithOptions({
+          options,
+          cancelButtonIndex,
+        },
+        (buttonIndex) => {
+          switch (buttonIndex) {
+            case 0:
+              if(this.props.onResendMessage != null) {
+                this.props.onResendMessage(this.props.currentMessage)
+              }
+          }
+        });
+      }
+    }
+  }
+
   render() {
     return (
       <View>
         {this.renderDay()}
+        { this.props.currentMessage.error && !this.props.isResending &&
+            <View style={{ position: 'absolute', zIndex: 999999, justifyContent: 'center', alignItems: 'center', width: '20%', height: '100%' }}>
+                <TouchableOpacity
+                    style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}
+                    onPress={this.onPressResend}>
+                    <Image
+                        style={{width: 25, resizeMode: 'contain'}}
+                        source={require('../images/exclamation.png')}></Image>
+                    { /* <Text
+                        style={{textAlign: 'center', fontSize: 7}}>{strings.RetryMessageNotice}</Text> */ }
+                </TouchableOpacity>
+            </View>
+        }
         <View style={[styles[this.props.position].container, {
           marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,
         }, this.props.containerStyle[this.props.position]]}>
@@ -95,6 +148,10 @@ Message.defaultProps = {
   previousMessage: {},
   user: {},
   containerStyle: {},
+};
+
+Message.contextTypes = {
+  actionSheet: React.PropTypes.func,
 };
 
 Message.propTypes = {

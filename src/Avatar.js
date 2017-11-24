@@ -27,7 +27,7 @@ export default class Avatar extends React.Component {
       return null
     }
 
-    if (isSameUser(this.props.currentMessage, messageToCompare) && isSameDay(this.props.currentMessage, messageToCompare)) {
+    { /* if (isSameUser(this.props.currentMessage, messageToCompare) && isSameDay(this.props.currentMessage, messageToCompare)) {
       return (
         <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
           <GiftedAvatar
@@ -35,8 +35,8 @@ export default class Avatar extends React.Component {
           />
         </View>
       );
-    }
-    
+    } */ }
+
     return (
       <View
         style={[styles[this.props.position].container, styles[this.props.position][computedStyle], this.props.containerStyle[this.props.position]]}>

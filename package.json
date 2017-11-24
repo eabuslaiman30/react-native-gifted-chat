@@ -11,9 +11,30 @@
         "type": "range"
       },
       "/Users/macbook/Projects/openenglish/app/OpenEnglish"
+    ],
+    [
+      {
+        "raw": "react-native-gifted-chat@git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
+        "scope": null,
+        "escapedName": "react-native-gifted-chat",
+        "name": "react-native-gifted-chat",
+        "rawSpec": "git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
+        "spec": "git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:eabuslaiman30/react-native-gifted-chat.git",
+          "sshUrl": "git+ssh://git@github.com/eabuslaiman30/react-native-gifted-chat.git",
+          "httpsUrl": "git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
+          "gitUrl": "git://github.com/eabuslaiman30/react-native-gifted-chat.git",
+          "shortcut": "github:eabuslaiman30/react-native-gifted-chat",
+          "directUrl": "https://raw.githubusercontent.com/eabuslaiman30/react-native-gifted-chat/master/package.json"
+        }
+      },
+      "/Users/eabuslaiman-mcpro/Trabajo/Qroom/OpenEnglish/app/OpenEnglish"
     ]
   ],
-  "_from": "react-native-gifted-chat@>=0.1.4 <0.2.0",
+  "_from": "git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
   "_id": "react-native-gifted-chat@0.1.5",
   "_inCache": true,
   "_location": "/react-native-gifted-chat",
@@ -29,22 +50,31 @@
   "_npmVersion": "4.6.1",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "react-native-gifted-chat@^0.1.4",
+    "raw": "react-native-gifted-chat@git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
     "scope": null,
     "escapedName": "react-native-gifted-chat",
     "name": "react-native-gifted-chat",
-    "rawSpec": "^0.1.4",
-    "spec": ">=0.1.4 <0.2.0",
-    "type": "range"
+    "rawSpec": "git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
+    "spec": "git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:eabuslaiman30/react-native-gifted-chat.git",
+      "sshUrl": "git+ssh://git@github.com/eabuslaiman30/react-native-gifted-chat.git",
+      "httpsUrl": "git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
+      "gitUrl": "git://github.com/eabuslaiman30/react-native-gifted-chat.git",
+      "shortcut": "github:eabuslaiman30/react-native-gifted-chat",
+      "directUrl": "https://raw.githubusercontent.com/eabuslaiman30/react-native-gifted-chat/master/package.json"
+    }
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/react-native-gifted-chat/-/react-native-gifted-chat-0.1.5.tgz",
-  "_shasum": "9823473f52bb29fd3b5efc404db5d6917bc1b2e7",
+  "_resolved": "git+https://github.com/eabuslaiman30/react-native-gifted-chat.git#a8ec5bac6ba7966df7d1f1336b1bd38baa8836f4",
+  "_shasum": "ddea31fa3b31be57c7120847a96f2007c0e39e73",
   "_shrinkwrap": null,
-  "_spec": "react-native-gifted-chat@^0.1.4",
-  "_where": "/Users/macbook/Projects/openenglish/app/OpenEnglish",
+  "_spec": "react-native-gifted-chat@git+https://github.com/eabuslaiman30/react-native-gifted-chat.git",
+  "_where": "/Users/eabuslaiman-mcpro/Trabajo/Qroom/OpenEnglish/app/OpenEnglish",
   "author": {
     "name": "Farid Safi"
   },

@@ -163,16 +163,6 @@ export default class Bubble extends React.Component {
                         {this.renderTicks()}
                     </View>
                 </View>
-                { this.props.currentMessage.error && !this.props.isResending &&
-                    <View style={{width: 30, height: 45, justifyContent: 'center'}}>
-                        <TouchableWithoutFeedback
-                            onPress={this.onPressResend}>
-                            <Image
-                                style={{width: 25, minHeight: 20, resizeMode: 'contain'}}
-                                source={require('../images/exclamation.png')}></Image>
-                        </TouchableWithoutFeedback>
-                    </View>
-                }
             </View>
           </TouchableWithoutFeedback>
         </View>
