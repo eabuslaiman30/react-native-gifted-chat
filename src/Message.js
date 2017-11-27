@@ -89,11 +89,16 @@ export default class Message extends React.Component {
   }
 
   render() {
+    if(this.props.currentMessage.error) {
+        console.log("Ok, aun con error..");
+        console.log(this.props.currentMessage);
+    }
+
     return (
       <View>
         {this.renderDay()}
-        { this.props.currentMessage.error && !this.props.isResending &&
-            <View style={{ position: 'absolute', zIndex: 999999, justifyContent: 'center', alignItems: 'center', width: '20%', height: '100%' }}>
+        { this.props.currentMessage.error &&
+            <View style={{ position: 'absolute', backgroundColor: 'white', zIndex: 999999, justifyContent: 'center', alignItems: 'center', width: '20%', height: '100%' }}>
                 <TouchableOpacity
                     style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}
                     onPress={this.onPressResend}>
@@ -105,6 +110,7 @@ export default class Message extends React.Component {
                 </TouchableOpacity>
             </View>
         }
+        <Text style={{ height: 0 }}></Text>
         <View style={[styles[this.props.position].container, {
           marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,
         }, this.props.containerStyle[this.props.position]]}>
