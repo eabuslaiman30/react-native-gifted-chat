@@ -15,6 +15,7 @@ import {isSameUser, isSameDay} from './utils';
 
 //Localization
 import { strings } from '../../../components/localization/strings'
+var Spinner = require('react-native-spinkit');
 
 export default class Message extends React.Component {
 
@@ -89,27 +90,28 @@ export default class Message extends React.Component {
   }
 
   render() {
-    if(this.props.currentMessage.error) {
-        console.log("Ok, aun con error..");
-        console.log(this.props.currentMessage);
-    }
-
     return (
       <View>
         {this.renderDay()}
         { this.props.currentMessage.error &&
-            <View style={{ position: 'absolute', backgroundColor: 'white', zIndex: 999999, justifyContent: 'center', alignItems: 'center', width: '20%', height: '100%' }}>
-                <TouchableOpacity
-                    style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}
-                    onPress={this.onPressResend}>
-                    <Image
-                        style={{width: 25, resizeMode: 'contain'}}
-                        source={require('../images/exclamation.png')}></Image>
-                    { /* <Text
-                        style={{textAlign: 'center', fontSize: 7}}>{strings.RetryMessageNotice}</Text> */ }
-                </TouchableOpacity>
+            <View style={{ position: 'absolute', backgroundColor: 'transparent', zIndex: 999999, justifyContent: 'center', alignItems: 'center', width: '20%', height: '100%' }}>
+
+                { !this.props.isResending &&
+                    <TouchableOpacity
+                        style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}
+                        onPress={this.onPressResend}>
+                        <Image
+                            style={{width: 25, resizeMode: 'contain'}}
+                            source={require('../images/exclamation.png')}></Image>
+                    </TouchableOpacity>
+                }
+
+                { this.props.isResending &&
+                    <Spinner color={'#0097ff'} type="Circle"/>
+                }
             </View>
         }
+
         <Text style={{ height: 0 }}></Text>
         <View style={[styles[this.props.position].container, {
           marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,

@@ -4,6 +4,12 @@ import {
   Platform,
   StyleSheet,
   View,
+  Text,
+  TouchableOpacity,
+  TouchableHighlight,
+  Image,
+  PanResponder,
+  Dimensions
 } from 'react-native';
 
 import ActionSheet from '@expo/react-native-action-sheet';
@@ -35,6 +41,8 @@ const MIN_COMPOSER_HEIGHT = Platform.select({
   android: 41,
 });
 const MAX_COMPOSER_HEIGHT = 100;
+var {height, width} = Dimensions.get('window');
+var START_POSITION_CALL_TO_TEACHER_BUTTON = { x : width - 50, y: 15 }
 
 class GiftedChat extends React.Component {
   constructor(props) {
@@ -53,13 +61,18 @@ class GiftedChat extends React.Component {
       isInitialized: false, // initialization will calculate maxHeight before rendering the chat
       composerHeight: MIN_COMPOSER_HEIGHT,
       messagesContainerHeight: null,
-      typingDisabled: false
+      typingDisabled: false,
+      pan: new Animated.ValueXY(START_POSITION_CALL_TO_TEACHER_BUTTON),
+      scale: new Animated.Value(1),
+      layoutWidth: width,
+      layoutHeight: height
     };
 
     this.onKeyboardWillShow = this.onKeyboardWillShow.bind(this);
     this.onKeyboardWillHide = this.onKeyboardWillHide.bind(this);
     this.onKeyboardDidShow = this.onKeyboardDidShow.bind(this);
     this.onKeyboardDidHide = this.onKeyboardDidHide.bind(this);
+    this.resetPanState = this.resetPanState.bind(this);
     this.onSend = this.onSend.bind(this);
     this.getLocale = this.getLocale.bind(this);
     this.onInputSizeChanged = this.onInputSizeChanged.bind(this);
@@ -99,10 +112,48 @@ class GiftedChat extends React.Component {
     };
   }
 
+  resetPanState() {
+    this.state.pan.setOffset({x: 0, y: 0});
+    this.state.pan.setValue(START_POSITION_CALL_TO_TEACHER_BUTTON);
+  }
+
   componentWillMount() {
     this.setIsMounted(true);
     this.initLocale();
     this.initMessages(this.props.messages);
+    this._panResponder = PanResponder.create({
+        onMoveShouldSetResponderCapture: () => true,
+        onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
+            let shouldMove = gestureState.dx != 0 && gestureState.dy != 0;
+            return shouldMove;
+        },
+
+        onPanResponderGrant: (e, gestureState) => {
+            // Set the initial value to the current state
+            this.state.pan.setOffset({x: this.state.pan.x._value, y: this.state.pan.y._value});
+            this.state.pan.setValue({x: 0, y: 0});
+            Animated.spring(
+                this.state.scale,
+                { toValue: 1.25, friction: 3 }
+            ).start();
+        },
+
+        onPanResponderMove: Animated.event([
+            null, {dx: this.state.pan.x, dy: this.state.pan.y},
+        ]),
+
+        onPanResponderRelease: (e, {vx, vy}) => {
+            if(e.nativeEvent.pageX < 15 || e.nativeEvent.pageY < 15 || e.nativeEvent.pageY > (this.state.layoutHeight - 15) || e.nativeEvent.pageX > (this.state.layoutWidth - 15)) {
+                this.resetPanState();
+            }
+            // Flatten the offset to avoid erratic behavior
+            this.state.pan.flattenOffset();
+            Animated.spring(
+                this.state.scale,
+                { toValue: 1, friction: 3 }
+            ).start();
+        }
+    });
   }
 
   componentWillUnmount() {
@@ -230,6 +281,10 @@ class GiftedChat extends React.Component {
   }
 
   onKeyboardWillShow(e) {
+
+    //Icon call to teacher in the normal position
+    this.resetPanState();
+
     this.setIsTypingDisabled(true);
     this.setKeyboardHeight(e.endCoordinates ? e.endCoordinates.height : e.end.height);
     this.setBottomOffset(this.props.bottomOffset);
@@ -387,6 +442,16 @@ class GiftedChat extends React.Component {
   onMainViewLayout(e) {
     // fix an issue when keyboard is dismissing during the initialization
     const layout = e.nativeEvent.layout;
+    if(layout.width != null) {
+        START_POSITION_CALL_TO_TEACHER_BUTTON = {x: layout.width - 50, y: 15 }
+        this.resetPanState();
+    }
+
+    this.setState({
+        layoutWidth: layout.width,
+        layoutHeight: layout.height
+    });
+
     if (this.getMaxHeight() !== layout.height || this.getIsFirstLayout() === true) {
       this.setMaxHeight(layout.height);
       this.setState({
@@ -443,12 +508,37 @@ class GiftedChat extends React.Component {
   }
 
   render() {
+
+    // Destructure the value of pan from the state
+    let { pan } = this.state;
+    // Calculate the x and y transform from the pan value
+    let [translateX, translateY] = [pan.x, pan.y];
+    let rotate = '0deg';
+    // Calculate the transform property and set it as a value for our style which we add below to the Animated.View component
+    let imageStyle = {zIndex: 999, position: 'absolute', transform: [{translateX}, {translateY}, {rotate}, {scale: this.state.scale}]};
+
     if (this.state.isInitialized === true) {
       return (
         <ActionSheet ref={component => this._actionSheetRef = component}>
           <View style={styles.container} onLayout={this.onMainViewLayout}>
             {this.renderMessages()}
             {this.renderInputToolbar()}
+
+            { this.props.callToTeacherButtonEnabled &&
+                <Animated.View style={imageStyle} {...this._panResponder.panHandlers}>
+                    <TouchableHighlight
+                        underlayColor={'transparent'}
+                        onPress={() => {
+                            if(this.props.callToTeacherButtonPressed) {
+                                this.props.callToTeacherButtonPressed();
+                            }
+                        }}>
+                        <Image
+                            style={{maxWidth: 80}}
+                            source={this.props.callToTeacherButtonImage} />
+                    </TouchableHighlight>
+                </Animated.View>
+            }
           </View>
         </ActionSheet>
       );
