@@ -42,7 +42,7 @@ const MIN_COMPOSER_HEIGHT = Platform.select({
 });
 const MAX_COMPOSER_HEIGHT = 100;
 var {height, width} = Dimensions.get('window');
-var START_POSITION_CALL_TO_TEACHER_BUTTON = { x : width - 50, y: 15 }
+var START_POSITION_CALL_TO_TEACHER_BUTTON = { x : width - 60, y: 15 }
 
 class GiftedChat extends React.Component {
   constructor(props) {
@@ -143,9 +143,30 @@ class GiftedChat extends React.Component {
         ]),
 
         onPanResponderRelease: (e, {vx, vy}) => {
-            if(e.nativeEvent.pageX < 15 || e.nativeEvent.pageY < 15 || e.nativeEvent.pageY > (this.state.layoutHeight - 15) || e.nativeEvent.pageX > (this.state.layoutWidth - 15)) {
+            /** if(e.nativeEvent.pageX < 15 || e.nativeEvent.pageY < 15 || e.nativeEvent.pageY > (this.state.layoutHeight - 15) || e.nativeEvent.pageX > (this.state.layoutWidth - 15)) {
                 this.resetPanState();
+            } **/
+
+            //80 is the width for the image, 70 is the height.
+            if(e.nativeEvent.pageX > 70 && e.nativeEvent.pageX < (width - 70)) {
+
+                if(e.nativeEvent.pageX < (this.state.layoutWidth / 2)) {
+                    //Force to align the element in the same Y axius but in the right.
+                    this.state.pan.setOffset({x: 0, y: 0});
+                    this.state.pan.setValue({ x: 0, y: e.nativeEvent.pageY - 30 });
+                } else {
+                    this.state.pan.setOffset({x: 0, y: 0});
+                    this.state.pan.setValue({ x: this.state.layoutWidth - 60, y: e.nativeEvent.pageY - 30 });
+                }
+
             }
+
+            if(e.nativeEvent.pageY < 15 || e.nativeEvent.pageY > (this.state.layoutHeight - 15)) {
+                //Force to align the element in the same Y axius but in the right.
+                this.state.pan.setOffset({x: 0, y: 0});
+                this.state.pan.setValue({ x: this.state.layoutWidth - 60, y: 15 });
+            }
+
             // Flatten the offset to avoid erratic behavior
             this.state.pan.flattenOffset();
             Animated.spring(
@@ -443,7 +464,7 @@ class GiftedChat extends React.Component {
     // fix an issue when keyboard is dismissing during the initialization
     const layout = e.nativeEvent.layout;
     if(layout.width != null) {
-        START_POSITION_CALL_TO_TEACHER_BUTTON = {x: layout.width - 50, y: 15 }
+        START_POSITION_CALL_TO_TEACHER_BUTTON = {x: layout.width - 60, y: 15 }
         this.resetPanState();
     }
 
