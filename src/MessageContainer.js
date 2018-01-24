@@ -5,6 +5,8 @@ import {
   View,
 } from 'react-native';
 
+import PropTypes from 'prop-types'
+
 import shallowequal from 'shallowequal';
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
 import md5 from 'md5';
@@ -39,7 +41,8 @@ export default class MessageContainer extends React.Component {
         const previousMessage = messages[i + 1] || {};
         const nextMessage = messages[i - 1] || {};
         // add next and previous messages to hash to ensure updates
-        const toHash = JSON.stringify(m) + previousMessage._id + nextMessage._id;
+        //const toHash = JSON.stringify(m) + previousMessage._id + nextMessage._id;
+        const toHash = previousMessage._id + nextMessage._id;
         o[m._id] = {
           ...m,
           previousMessage,
@@ -169,10 +172,10 @@ MessageContainer.defaultProps = {
 };
 
 MessageContainer.propTypes = {
-  messages: React.PropTypes.array,
-  user: React.PropTypes.object,
-  renderFooter: React.PropTypes.func,
-  renderMessage: React.PropTypes.func,
-  onLoadEarlier: React.PropTypes.func,
-  listViewProps: React.PropTypes.object,
+  messages: PropTypes.array,
+  user: PropTypes.object,
+  renderFooter: PropTypes.func,
+  renderMessage: PropTypes.func,
+  onLoadEarlier: PropTypes.func,
+  listViewProps: PropTypes.object,
 };

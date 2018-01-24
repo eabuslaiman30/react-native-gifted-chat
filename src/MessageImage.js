@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 
+import PropTypes from 'prop-types'
+
 export default class MessageImage extends React.Component {
   render() {
     const { width, height } = Dimensions.get('window');
@@ -56,9 +58,9 @@ MessageImage.defaultProps = {
 };
 
 MessageImage.propTypes = {
-  currentMessage: React.PropTypes.object,
+  currentMessage: PropTypes.object,
   containerStyle: View.propTypes.style,
   imageStyle: Image.propTypes.style,
-  imageProps: React.PropTypes.object,
-  lightboxProps: React.PropTypes.object,
+  imageProps: PropTypes.object,
+  lightboxProps: PropTypes.object,
 };

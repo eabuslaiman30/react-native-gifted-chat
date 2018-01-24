@@ -15,6 +15,7 @@ import {
 import ActionSheet from '@expo/react-native-action-sheet';
 import moment from 'moment/min/moment-with-locales.min';
 import uuid from 'uuid';
+import PropTypes from 'prop-types'
 
 import * as utils from './utils';
 import Actions from './Actions';
@@ -65,7 +66,8 @@ class GiftedChat extends React.Component {
       pan: new Animated.ValueXY(START_POSITION_CALL_TO_TEACHER_BUTTON),
       scale: new Animated.Value(1),
       layoutWidth: width,
-      layoutHeight: height
+      layoutHeight: height,
+      disableKeyboardListeners: false
     };
 
     this.onKeyboardWillShow = this.onKeyboardWillShow.bind(this);
@@ -115,6 +117,16 @@ class GiftedChat extends React.Component {
   resetPanState() {
     this.state.pan.setOffset({x: 0, y: 0});
     this.state.pan.setValue(START_POSITION_CALL_TO_TEACHER_BUTTON);
+  }
+
+  enableKeyboardListeners() {
+    this.setState({ disableKeyboardListeners: false })
+  }
+
+  disableKeyboardListeners() {
+    this.setState({ disableKeyboardListeners: true })
+    console.log(this.textInput);
+    this.textInput.blur();
   }
 
   componentWillMount() {
@@ -473,14 +485,16 @@ class GiftedChat extends React.Component {
         layoutHeight: layout.height
     });
 
-    if (this.getMaxHeight() !== layout.height || this.getIsFirstLayout() === true) {
-      this.setMaxHeight(layout.height);
-      this.setState({
-        messagesContainerHeight: this.prepareMessagesContainerHeight(this.getBasicMessagesContainerHeight()),
-      });
-    }
-    if (this.getIsFirstLayout() === true) {
-      this.setIsFirstLayout(false);
+    if(!this.state.disableKeyboardListeners) {
+        if (this.getMaxHeight() !== layout.height || this.getIsFirstLayout() === true) {
+          this.setMaxHeight(layout.height);
+          this.setState({
+            messagesContainerHeight: this.prepareMessagesContainerHeight(this.getBasicMessagesContainerHeight()),
+          });
+        }
+        if (this.getIsFirstLayout() === true) {
+          this.setIsFirstLayout(false);
+        }
     }
   }
 
@@ -579,8 +593,8 @@ const styles = StyleSheet.create({
 });
 
 GiftedChat.childContextTypes = {
-  actionSheet: React.PropTypes.func,
-  getLocale: React.PropTypes.func,
+  actionSheet: PropTypes.func,
+  getLocale: PropTypes.func,
 };
 
 GiftedChat.defaultProps = {
@@ -625,36 +639,36 @@ GiftedChat.defaultProps = {
 };
 
 GiftedChat.propTypes = {
-  messages: React.PropTypes.array,
-  onSend: React.PropTypes.func,
-  onInputTextChanged: React.PropTypes.func,
-  loadEarlier: React.PropTypes.bool,
-  onLoadEarlier: React.PropTypes.func,
-  locale: React.PropTypes.string,
-  isAnimated: React.PropTypes.bool,
-  renderAccessory: React.PropTypes.func,
-  renderActions: React.PropTypes.func,
-  renderAvatar: React.PropTypes.func,
-  renderBubble: React.PropTypes.func,
-  renderFooter: React.PropTypes.func,
-  renderChatFooter: React.PropTypes.func,
-  renderMessageText: React.PropTypes.func,
-  renderMessageImage: React.PropTypes.func,
-  renderComposer: React.PropTypes.func,
-  renderCustomView: React.PropTypes.func,
-  renderDay: React.PropTypes.func,
-  renderInputToolbar: React.PropTypes.func,
-  renderLoadEarlier: React.PropTypes.func,
-  renderLoading: React.PropTypes.func,
-  renderMessage: React.PropTypes.func,
-  renderSend: React.PropTypes.func,
-  renderTime: React.PropTypes.func,
-  user: React.PropTypes.object,
-  bottomOffset: React.PropTypes.number,
-  minInputToolbarHeight: React.PropTypes.number,
-  isLoadingEarlier: React.PropTypes.bool,
-  messageIdGenerator: React.PropTypes.func,
-  keyboardShouldPersistTaps: React.PropTypes.oneOf(['always', 'never', 'handled']),
+  messages: PropTypes.array,
+  onSend: PropTypes.func,
+  onInputTextChanged: PropTypes.func,
+  loadEarlier: PropTypes.bool,
+  onLoadEarlier: PropTypes.func,
+  locale: PropTypes.string,
+  isAnimated: PropTypes.bool,
+  renderAccessory: PropTypes.func,
+  renderActions: PropTypes.func,
+  renderAvatar: PropTypes.func,
+  renderBubble: PropTypes.func,
+  renderFooter: PropTypes.func,
+  renderChatFooter: PropTypes.func,
+  renderMessageText: PropTypes.func,
+  renderMessageImage: PropTypes.func,
+  renderComposer: PropTypes.func,
+  renderCustomView: PropTypes.func,
+  renderDay: PropTypes.func,
+  renderInputToolbar: PropTypes.func,
+  renderLoadEarlier: PropTypes.func,
+  renderLoading: PropTypes.func,
+  renderMessage: PropTypes.func,
+  renderSend: PropTypes.func,
+  renderTime: PropTypes.func,
+  user: PropTypes.object,
+  bottomOffset: PropTypes.number,
+  minInputToolbarHeight: PropTypes.number,
+  isLoadingEarlier: PropTypes.bool,
+  messageIdGenerator: PropTypes.func,
+  keyboardShouldPersistTaps: PropTypes.oneOf(['always', 'never', 'handled']),
 };
 
 export {
