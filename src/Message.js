@@ -4,7 +4,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  Text
+  Text,
+  ViewPropTypes
 } from 'react-native';
 
 import Avatar from './Avatar';
@@ -174,7 +175,7 @@ Message.propTypes = {
   previousMessage: PropTypes.object,
   user: PropTypes.object,
   containerStyle: PropTypes.shape({
-    left: View.propTypes.style,
-    right: View.propTypes.style,
+    left: ViewPropTypes.style,
+    right: ViewPropTypes.style,
   }),
 };

@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ViewPropTypes
 } from 'react-native';
 
 import PropTypes from 'prop-types'
@@ -129,8 +130,8 @@ MessageText.propTypes = {
   position: PropTypes.oneOf(['left', 'right']),
   currentMessage: PropTypes.object,
   containerStyle: PropTypes.shape({
-    left: View.propTypes.style,
-    right: View.propTypes.style,
+    left: ViewPropTypes.style,
+    right: ViewPropTypes.style,
   }),
   textStyle: PropTypes.shape({
     left: Text.propTypes.style,

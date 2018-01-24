@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ViewPropTypes
 } from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -106,6 +107,6 @@ Actions.propTypes = {
   optionTintColor: PropTypes.string,
   icon: PropTypes.func,
   onPressActionButton: PropTypes.func,
-  containerStyle: View.propTypes.style,
+  containerStyle: ViewPropTypes.style,
   iconTextStyle: Text.propTypes.style,
 };
